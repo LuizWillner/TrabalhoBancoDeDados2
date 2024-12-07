@@ -1,3 +1,5 @@
+-- Executar o script abaixo na conexão padrão do superusuário "system"
+
 ALTER SESSION SET container=XEpdb1;  -- altera o container para o XEPDB1
 
 CREATE USER chinook IDENTIFIED BY senha container=current;  -- usuário chinook criado com senha "senha"
