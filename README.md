@@ -52,3 +52,4 @@ O código para setup do banco foi extraído do repositório [ChinookDatabase de 
     14. [14-insert-into-playlisttrack.sql](https://github.com/LuizWillner/TrabalhoBancoDeDados2/blob/main/scripts/chinook-db-setup/14-insert-into-playlisttrack.sql): Execute o script conectado na sessão com user "chinook" e service name "XEpdb1". Popula a tabela PlaylistTrack.
 
     15. [15-commit.sql](https://github.com/LuizWillner/TrabalhoBancoDeDados2/blob/main/scripts/chinook-db-setup/15-commit.sql): Execute o script conectado na sessão com user "chinook" e service name "XEpdb1". Faz o commit das alterações (caso autocommit esteja desligado).
+	
