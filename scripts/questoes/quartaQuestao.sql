@@ -1,18 +1,9 @@
-SELECT a.table_name, a.column_name, a.constraint_name, c.owner, 
-       -- referenced pk
-       c.r_owner, c_pk.table_name r_table_name, c_pk.constraint_name r_pk
-  FROM all_cons_columns a
-  JOIN all_constraints c ON a.owner = c.owner
-                        AND a.constraint_name = c.constraint_name
-  JOIN all_constraints c_pk ON c.r_owner = c_pk.owner
-                           AND c.r_constraint_name = c_pk.constraint_name
- WHERE c.constraint_type = 'R'
-   AND a.table_name = 'ALBUM';
-   
 CREATE OR REPLACE PROCEDURE CRIACAO_DINAMICA_DE_TABELAS
 IS
     comandosDeCriacao VARCHAR2(1000) := '';
-
+   	comandosDeAlteracao VARCHAR2(1000) := '';
+    constraintPrimaryKey cursorChavesPrimarias%ROWTYPE;
+   
     CURSOR cursorTabelas IS
         SELECT TABLE_NAME 
         FROM all_tables 
@@ -29,13 +20,18 @@ IS
         JOIN user_constraints u ON u.CONSTRAINT_NAME = c.CONSTRAINT_NAME
         WHERE c.owner = 'CHINOOK' AND u.CONSTRAINT_TYPE = 'P' AND c.TABLE_NAME = nomeTabela;
         
-    constraintPrimaryKey cursorChavesPrimarias%ROWTYPE;
+    CURSOR cursorChavesEstrangeiras IS
+	    SELECT tabela.CONSTRAINT_NAME AS nome_fk,
+	    	   coluna.COLUMN_NAME AS nome_coluna_fk, 
+	    	   tabela.TABLE_NAME AS nome_tabela_fk,
+	    	   tabela_referenciada.TABLE_NAME AS nome_tabela_refenciada,
+	    	   coluna_referenciada.COLUMN_NAME AS nome_coluna_referenciada 
+		FROM ALL_CONSTRAINTS tabela
+			JOIN ALL_CONSTRAINTS tabela_referenciada ON tabela.R_CONSTRAINT_NAME = tabela_referenciada.CONSTRAINT_NAME
+			JOIN ALL_CONS_COLUMNS coluna ON tabela.CONSTRAINT_NAME = coluna.CONSTRAINT_NAME
+			JOIN ALL_CONS_COLUMNS coluna_referenciada ON tabela.R_CONSTRAINT_NAME = coluna_referenciada.CONSTRAINT_NAME 
+		WHERE tabela.OWNER = 'CHINOOK' AND tabela.CONSTRAINT_TYPE = 'R';
     
-    CURSOR cursorChavesEstrangeiras (nomeTabela VARCHAR2) IS
-        SELECT c.CONSTRAINT_NAME , c.COLUMN_NAME 
-        FROM all_cons_columns  c
-        JOIN user_constraints u ON u.CONSTRAINT_NAME = c.CONSTRAINT_NAME
-        WHERE c.owner = 'CHINOOK' AND u.CONSTRAINT_TYPE = 'R' AND c.TABLE_NAME = nomeTabela;
 BEGIN
     --Vai criando a string do comando de criação para cada tabela e para cada coluna daquela tabela
     FOR tabela IN cursorTabelas LOOP
@@ -49,14 +45,26 @@ BEGIN
                 comandosDeCriacao := comandosDeCriacao || ' NOT NULL ,' || CHR(10);
             END IF;
         END LOOP;
-        OPEN cursorChavesPrimarias(tabela.TABLE_NAME);
-            FETCH cursorChavesPrimarias INTO constraintPrimaryKey;
-            IF cursorChavesPrimarias%FOUND THEN
-                comandosDeCriacao := comandosDeCriacao || 'CONSTRAINT ' || constraintPrimaryKey.CONSTRAINT_NAME ||
-                                                                            ' PRIMARY KEY (' || constraintPrimaryKey.COLUMN_NAME || ')'  || CHR(10);
-            END IF;
-        CLOSE cursorChavesPrimarias;
-        comandosDeCriacao := comandosDeCriacao || ');';
-        DBMS_OUTPUT.PUT_LINE(comandosDeCriacao);
+       
+        -- chave primária
+	    OPEN cursorChavesPrimarias(tabela.TABLE_NAME);
+	        FETCH cursorChavesPrimarias INTO constraintPrimaryKey;
+	        IF cursorChavesPrimarias%FOUND THEN
+	            comandosDeCriacao := comandosDeCriacao || 'CONSTRAINT ' || constraintPrimaryKey.CONSTRAINT_NAME ||
+	                                                                        ' PRIMARY KEY (' || constraintPrimaryKey.COLUMN_NAME || ')'  || CHR(10);
+	        END IF;
+	    CLOSE cursorChavesPrimarias;
+	    comandosDeCriacao := comandosDeCriacao || ');';
+	    DBMS_OUTPUT.PUT_LINE(comandosDeCriacao);
     END LOOP;
+   
+   	-- chaves estrangeiras
+	FOR chaveEstrangeira IN cursorChavesEstrangeiras LOOP
+		comandosDeAlteracao := '';
+		comandosDeAlteracao := comandosDeAlteracao || 'ALTER TABLE ' || chaveEstrangeira.nome_tabela_fk || ' ADD CONSTRAINT '
+								|| chaveEstrangeira.nome_fk || ' FOREIGN KEY (' || chaveEstrangeira.nome_coluna_fk || ') REFERENCES '
+								|| chaveEstrangeira.nome_tabela_referenciada || ' (' || chaveEstrangeira.nome_coluna_referenciada || ');';
+		DBMS_OUTPUT.PUT_LINE(comandosDeAlteracao);	
+	END LOOP;
+	
 END CRIACAO_DINAMICA_DE_TABELAS;
