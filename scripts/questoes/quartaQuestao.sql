@@ -2,8 +2,7 @@ CREATE OR REPLACE PROCEDURE CRIACAO_DINAMICA_DE_TABELAS
 IS
     comandosDeCriacao VARCHAR2(1000) := '';
    	comandosDeAlteracao VARCHAR2(1000) := '';
-    constraintPrimaryKey cursorChavesPrimarias%ROWTYPE;
-   
+    
     CURSOR cursorTabelas IS
         SELECT TABLE_NAME 
         FROM all_tables 
@@ -19,12 +18,13 @@ IS
         FROM all_cons_columns  c
         JOIN user_constraints u ON u.CONSTRAINT_NAME = c.CONSTRAINT_NAME
         WHERE c.owner = 'CHINOOK' AND u.CONSTRAINT_TYPE = 'P' AND c.TABLE_NAME = nomeTabela;
+    constraintPrimaryKey cursorChavesPrimarias%ROWTYPE;
         
     CURSOR cursorChavesEstrangeiras IS
 	    SELECT tabela.CONSTRAINT_NAME AS nome_fk,
-	    	   coluna.COLUMN_NAME AS nome_coluna_fk, 
+	    	   coluna.COLUMN_NAME  AS nome_coluna_fk, 
 	    	   tabela.TABLE_NAME AS nome_tabela_fk,
-	    	   tabela_referenciada.TABLE_NAME AS nome_tabela_refenciada,
+	    	   tabela_referenciada.TABLE_NAME AS NOME_TABELA_REFERENCIADA,
 	    	   coluna_referenciada.COLUMN_NAME AS nome_coluna_referenciada 
 		FROM ALL_CONSTRAINTS tabela
 			JOIN ALL_CONSTRAINTS tabela_referenciada ON tabela.R_CONSTRAINT_NAME = tabela_referenciada.CONSTRAINT_NAME
