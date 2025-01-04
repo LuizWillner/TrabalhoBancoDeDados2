@@ -1,0 +1,25 @@
+-- 1. Criar regras semânticas, que são regras que não podem ser garantidas pela estrutura 
+-- do modelo relacional, usando o esquema exemplo fornecido. As regras criadas também 
+-- devem ser descritas textualmente no trabalho a ser entregue.
+
+-- OBS: Não precisamos implementar todas. A número 5 é específica da questão 4. Temos que escolher no mínimo
+-- 2 dentre as outras 4 para implementar.
+
+
+REGRAS SEMÂNTICAS (não garantidas pela estrutura do modelo relacional)
+
+1) Regra de Integridade de Data de Contratação de Funcionários:
+    A data de contratação de um funcionário (employee) não pode ser uma data futura.
+
+2) Regra de Integridade de Data de Nascimento de Funcionários:
+    A data de contratação de um funcionário (employee) não pode ser uma data futura. 
+    O funcionário deve ter pelo menos 18 anos de idade.
+
+3) Regra de Integridade de Preço de Faixas:
+    O preço de uma faixa (track) não pode ser negativo.
+
+4) Regra de Integridade de Duração de Faixas:
+    A duração de uma faixa (track) deve ser maior que zero.
+
+5) Regra de Integridade de Faturas e Itens da Fatura:
+    O valor total de uma fatura (invoice) deve ser igual à soma dos valores dos itens da fatura (invoice_line) relacionados a ela.
