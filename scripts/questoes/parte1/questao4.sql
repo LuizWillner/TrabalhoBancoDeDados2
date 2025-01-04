@@ -1,3 +1,8 @@
+-- 4. Criar usando a linguagem de programação do SGBD escolhido um script que construa 
+-- de forma dinâmica a partir do catálogo os comandos create table das tabelas 
+-- existentes no esquema exemplo considerando pelo menos as informações sobre 
+-- colunas (nome, tipo e obrigatoriedade) e chaves primárias e estrangeiras. 
+
 create or replace PROCEDURE CRIACAO_DINAMICA_DE_TABELAS
 IS
     comandosDeCriacao VARCHAR2(1000) := '';

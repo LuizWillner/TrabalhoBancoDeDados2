@@ -1,6 +1,7 @@
 -- Questão 2
 -- Criar usando a linguagem de programação do SGBD escolhido um procedimento que
 -- remova todos os índices de uma tabela informada como parâmetro.
+
 CREATE OR REPLACE PROCEDURE REMOVERINDICESTABELA 
 (
   NOMETABELA IN VARCHAR2 
