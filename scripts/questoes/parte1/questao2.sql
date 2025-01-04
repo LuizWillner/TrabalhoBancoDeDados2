@@ -10,7 +10,7 @@ CREATE OR REPLACE PROCEDURE REMOVERINDICESTABELA
         SELECT c.table_name, c.constraint_name FROM user_constraints c
         WHERE  c.owner = 'CHINOOK' AND c.TABLE_NAME = NOMETABELA AND (c.constraint_type = 'R' OR c.constraint_type = 'P')
         ORDER BY c.constraint_type DESC;
-
+        -- R são constraints de chave estrangeira e P são constraints de chave primária
 BEGIN
         FOR constraintsParaRemover IN cursorsVariveisDependentes LOOP
             DBMS_OUTPUT.PUT_LINE('Constraint encontrada: ' || constraintsParaRemover.constraint_name || ' na tabela ' || constraintsParaRemover.table_name);
