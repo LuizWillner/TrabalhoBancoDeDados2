@@ -1,0 +1,1 @@
+-- 2. Implementar triggers que garantam a validação das regras semânticas criadas. 

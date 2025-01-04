@@ -1,0 +1,6 @@
+-- 4. A base original do Chinook possui uma coluna Total na tabela Invoice representada 
+-- de forma redundante com as informações contidas nas colunas UnitPrice e 
+-- Quantity na tabela InvoiceLine. Podemos identificar nesse caso uma regra 
+-- semântica onde o valor Total de um Invoice deve ser igual à soma de UnitPrice * 
+-- Quantity de todos os registros de InvoiceLine relacionados a um Invoice. 
+-- Implementar uma solução que garanta a integridade dessa regra.
