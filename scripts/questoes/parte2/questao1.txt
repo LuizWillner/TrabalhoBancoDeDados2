@@ -19,7 +19,10 @@ REGRAS SEMÂNTICAS (não garantidas pela estrutura do modelo relacional)
     O preço de uma faixa (track) não pode ser negativo.
 
 4) Regra de Integridade de Duração de Faixas:
-    A duração de uma faixa (track) deve ser maior que zero.
+    A duração de uma faixa (track) não pode ser negativa.
 
-5) Regra de Integridade de Faturas e Itens da Fatura:
+5) Regra de Integridade de Tamanho do Arquivo da Faixa:
+    O tamanho (em bytes) não pode ser negativo.
+
+6) Regra de Integridade de Faturas e Itens da Fatura:
     O valor total de uma fatura (invoice) deve ser igual à soma dos valores dos itens da fatura (invoice_line) relacionados a ela.
