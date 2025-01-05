@@ -5,11 +5,11 @@
 ------------- Regra de Integridade de Data de Contratação de Funcionários -------------
 -- A data de contratação de um funcionário (employee) não pode ser uma data futura.
 
--- Procedure para verificar a data de contratação de funcionários
-CREATE OR REPLACE PROCEDURE check_employee_hiredate(p_hiredate IN DATE) IS
+-- Procedure para verificar se uma data é uma data futura
+CREATE OR REPLACE PROCEDURE check_not_future_date(p_date IN DATE, p_target_column IN VARCHAR2) IS
 BEGIN
-    IF p_hiredate > SYSDATE THEN
-        RAISE_APPLICATION_ERROR(-20002, 'A data de contratação não pode ser uma data futura.');
+    IF p_date > SYSDATE THEN
+        RAISE_APPLICATION_ERROR(-20002, 'O valor de ' || p_target_column || ' não pode ser uma data futura.');
     END IF;
 END;
 
@@ -19,7 +19,7 @@ BEFORE INSERT OR UPDATE ON employee
 FOR EACH ROW  -- indica que a trigger será executada para cada linha afetada pela operação de INSERT ou UPDATE. (tipo 'ROW')
 BEGIN
      -- :NEW é uma variável especial que contém os valores dos campos da linha que está sendo inserida ou atualizada.
-    check_employee_hiredate(:NEW.hiredate);
+    check_not_future_date(:NEW.hiredate, "HireDate");
 END;
 
 
