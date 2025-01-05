@@ -5,12 +5,13 @@ ALTER SESSION SET container=XEpdb1;  -- altera o container para o XEPDB1
 CREATE USER chinook IDENTIFIED BY senha container=current;  -- usuário chinook criado com senha "senha"
 ALTER USER chinook QUOTA 10M ON USERS;
 
-GRANT connect TO chinook;
+GRANT connect TO chinook WITH ADMIN OPTION;
 GRANT resource TO chinook;
 GRANT create session TO chinook;
 GRANT create table TO chinook;
 GRANT create view TO chinook;
 GRANT create sequence TO chinook;
+GRANT create user TO chinook;
 grant UNLIMITED TABLESPACE to developer; -- concede ao usuário developer o privilégio 
 -- de usar qualquer quantidade de espaço em disco em todos os tablespaces disponíveis no banco de dados.
 
