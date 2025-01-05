@@ -12,7 +12,7 @@ REGRAS SEMÂNTICAS (não garantidas pela estrutura do modelo relacional)
     A data de contratação de um funcionário (employee) não pode ser uma data futura.
 
 2) Regra de Integridade de Data de Nascimento de Funcionários:
-    A data de contratação de um funcionário (employee) não pode ser uma data futura. 
+    A data de nascimento de um funcionário (employee) não pode ser uma data futura. 
     O funcionário deve ter pelo menos 18 anos de idade.
 
 3) Regra de Integridade de Preço de Faixas:
