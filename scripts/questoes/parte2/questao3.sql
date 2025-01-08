@@ -18,14 +18,6 @@ BEGIN
     END IF;
 END;
 
--- Trigger para garantir a Regra de Integridade de Data de Nascimento de Funcionários
-CREATE OR REPLACE TRIGGER trg_employee_birthdate
-BEFORE INSERT OR UPDATE ON employee
-FOR EACH ROW
-BEGIN
-    check_employee_birthdate(:NEW.birthdate);
-END;
-
 
 -- Criação de um usuário com permissões limitadas
 CREATE USER usuario_limitado IDENTIFIED BY senha;
