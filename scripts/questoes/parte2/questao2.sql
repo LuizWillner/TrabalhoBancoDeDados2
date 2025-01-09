@@ -19,7 +19,7 @@ BEFORE INSERT OR UPDATE ON employee
 FOR EACH ROW  -- indica que a trigger será executada para cada linha afetada pela operação de INSERT ou UPDATE. (tipo 'ROW')
 BEGIN
      -- :NEW é uma variável especial que contém os valores dos campos da linha que está sendo inserida ou atualizada.
-    check_not_future_date(:NEW.hiredate, "HireDate");
+    check_not_future_date(:NEW.hiredate, 'HireDate');
 END;
 
 
