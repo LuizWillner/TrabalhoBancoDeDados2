@@ -12,8 +12,6 @@ CREATE TABLE StateTransitions (
     PRIMARY KEY (CurrentState, NextState)
 );
 
-DROP TABLE StateTransitions CASCADE CONSTRAINTS;
-
 INSERT INTO StateTransitions (CurrentState, NextState) VALUES ('Open', 'Canceled');
 INSERT INTO StateTransitions (CurrentState, NextState) VALUES ('Open', 'Closed');
 INSERT INTO StateTransitions (CurrentState, NextState) VALUES ('Closed', 'Canceled');
