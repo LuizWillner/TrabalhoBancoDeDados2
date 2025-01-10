@@ -31,7 +31,59 @@ BEGIN
     END LOOP;
 END trigger_atualizar_total_invoice;
 
-
+-- TESTE DE MUDANÇA DE INVOICELINE
 update invoiceline
 set unitprice = 0.99
 where invoicelineid = 1;
+
+
+-- TRIGGER PARA IMPEDIR O UPDATE E INNSERT DO VALOR TOTAL
+CREATE OR REPLACE TRIGGER trg_invoice_total
+BEFORE INSERT OR UPDATE ON invoice
+FOR EACH ROW
+BEGIN
+    -- Bloqueia atualização manual do TOTAL
+    IF UPDATING THEN
+        RAISE_APPLICATION_ERROR(-20010, 'O valor de TOTAL não pode ser alterado manualmente');
+    END IF;
+    -- Bloqueia inserção manual do TOTAL
+    IF INSERTING THEN
+        IF :NEW.TOTAL IS NOT NULL THEN
+            RAISE_APPLICATION_ERROR(-20010, 'O valor de TOTAL não pode ser inserido manualmente');
+        END IF;
+        IF :NEW.TOTAL IS NULL THEN
+            :NEW.TOTAL := 0;
+        END IF;
+    END IF;
+END;
+
+
+-- TESTE DE UPDATE
+UPDATE INVOICE
+SET TOTAL = 10
+WHERE INVOICEID = 1;
+
+
+-- Teste Insert
+INSERT INTO invoice (
+    invoiceid,
+    CustomerId,
+    InvoiceDate,
+    BillingAddress,
+    BillingCity,
+    BillingState,
+    BillingCountry,
+    BillingPostalCode
+)
+VALUES (
+    10000,                   -- GARANTIR QUE NÃO É UM ID EXISTENTE
+    1,                       -- CustomerId (substitua por um ID de cliente válido)
+    SYSDATE,                 -- InvoiceDate (data atual)
+    'Rua Exemplo',           -- BillingAddress
+    'São Paulo',             -- BillingCity
+    'SP',                    -- BillingState
+    'Brasil',                -- BillingCountry
+    '12345-678'              -- BillingPostalCode
+);
+
+DELETE FROM INVOICE WHERE INVOICEID = 10000;
