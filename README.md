@@ -4,6 +4,12 @@ Trabalho da disciplina de Banco de Dados II | prof. Rodrigo Salvador | 2024.2 | 
 ## Enunciado do trabalho
 O enunciado do trabalho se encontra no arquivo [trabalho-bd2-2024-2.pdf](https://github.com/LuizWillner/TrabalhoBancoDeDados2/blob/main/trabalho-bd2-2024-2.pdf).
 
+## Participantes do trabalho
+- Gabriel Vieira Alves
+- Leon Rabello
+- Luiz Claudio Willner
+- Marina Savino Rocha Piragibe Magalhaes
+- Pedro Henrique Bose Ximenes Pedrosa
 
 ## Banco de dados Chinook
 Chinook é um banco de dados de exemplo disponível para SQL Server, Oracle, MySQL, etc. O modelo de dados do Chinook representa uma loja de mídia digital, incluindo tabelas para artistas, álbuns, faixas de mídia, faturas e clientes. Os dados relacionados à mídia foram criados usando dados reais de uma biblioteca do iTunes. É possível usar sua própria biblioteca do iTunes para gerar os scripts SQL, veja as instruções aqui. As informações de clientes e funcionários foram criadas manualmente usando nomes fictícios, endereços que podem ser localizados no Google Maps e outros dados bem formatados (telefone, fax, e-mail, etc.). As informações de vendas são geradas automaticamente usando dados aleatórios para um período de quatro anos.
