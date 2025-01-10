@@ -8,7 +8,7 @@ O enunciado do trabalho se encontra no arquivo [trabalho-bd2-2024-2.pdf](https:/
 - Gabriel Vieira Alves
 - Leon Rabello
 - Luiz Claudio Willner
-- Marina Savino Rocha Piragibe Magalhaes
+- Marina Savino Rocha Piragibe Magalhães
 - Pedro Henrique Bose Ximenes Pedrosa
 
 ## Banco de dados Chinook
