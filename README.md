@@ -67,4 +67,4 @@ O código para setup do banco foi extraído do repositório [ChinookDatabase de 
 ## Extras
 
 - Caso deseje dropar todas as tabelas para reiniciar o processo, execute o script [16-drop-tables.sql](https://github.com/LuizWillner/TrabalhoBancoDeDados2/blob/main/scripts/chinook-db-setup/16-drop-tables.sql).
-- Caso prefira executar todos os scripts de setup do banco de dados de uma vez, use o script [17-execute-all.sql](https://github.com/LuizWillner/TrabalhoBancoDeDados2/blob/main/scripts/chinook-db-setup/17-execute-all.sql). A modularização do setup do banco foi feita pois, em alguns casos, a execução de tantas operações de uma vez só pode acarretar em erros.
+- Caso prefira executar todos os scripts a partir do script 2 (_02-create-tables.sql_) de setup do banco de dados de uma vez, use o script [17-execute-all.sql](https://github.com/LuizWillner/TrabalhoBancoDeDados2/blob/main/scripts/chinook-db-setup/17-execute-all.sql). Lembre-se de antes executar e seguir o passo a passo do script 1 (_01-create-user.sql_). A modularização do setup do banco foi feita pois, em alguns casos, a execução de tantas operações de uma vez só pode acarretar em erros.
