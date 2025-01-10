@@ -1,4 +1,4 @@
-# Trabalho PL/SQL - Banco de Dados II
+# Trabalho PL/SQL - Banco de Dados II (ORACLE)
 
 Trabalho da disciplina de Banco de Dados II | prof. Rodrigo Salvador | 2024.2 | Universidade Federal Fluminense
 
@@ -22,7 +22,7 @@ Nesse trabalho, o SGBD escolhido para gerenciar os dados foi o **Oracle** (vers�
 
 ## Setup do banco de dados Chinook
 
-O código para setup do banco foi extraído do repositório [ChinookDatabase de cwoodruff](https://github.com/cwoodruff/ChinookDatabase/blob/master/Scripts/Chinook_Oracle.sql) para Oracle. Siga os passos para configurar:
+O código para setup do banco foi extraído do repositório [ChinookDatabase de cwoodruff](https://github.com/cwoodruff/ChinookDatabase/blob/master/Scripts/Chinook_Oracle.sql) para **Oracle**. Siga os passos para configurar:
 
 1. Baixe e instale o [Oracle Database 21c Express Edition](https://www.oracle.com/br/database/technologies/xe-downloads.html).
 
