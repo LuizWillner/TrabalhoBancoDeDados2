@@ -6,16 +6,23 @@
 -- Implementar uma solução que garanta a integridade dessa regra.
 
 
--- Procedure para inserir ou atualizar invoiceline. Atualiza coluna total em invoice de acordo com a regra semântica
+-- Procedure para inserir ou atualizar invoiceline
 CREATE OR REPLACE PROCEDURE manage_invoiceline(
     p_invoicelineid IN invoiceline.INVOICELINEID%TYPE,
     p_invoiceid IN invoiceline.INVOICEID%TYPE,
     p_trackid IN invoiceline.TRACKID%TYPE,
-    p_unitprice IN invoiceline.UNITPRICE%TYPE,
     p_quantity IN invoiceline.QUANTITY%TYPE
 ) IS
 	v_total invoice.TOTAL%TYPE;
+	v_unitprice track.unitprice%TYPE;
 BEGIN
+	
+	-- Definindo qual o unitprice
+	SELECT t.unitprice
+	INTO v_unitprice
+	FROM track t
+	WHERE t.trackid = p_trackid;
+
     -- Comando MERGE utilizado para inserir ou atualizar invoiceline
     MERGE INTO invoiceline il
     USING (SELECT p_invoicelineid AS invoicelineid FROM dual) src
@@ -24,13 +31,13 @@ BEGIN
         UPDATE SET
             il.invoiceid = p_invoiceid,
             il.trackid = p_trackid,
-            il.unitprice = p_unitprice,
+            il.unitprice = v_unitprice,
             il.quantity = p_quantity
     WHEN NOT MATCHED THEN
         INSERT 
         	(invoicelineid, invoiceid, trackid, unitprice, quantity)
         VALUES 
-       		(p_invoicelineid, p_invoiceid, p_trackid, p_unitprice, p_quantity);
+       		(p_invoicelineid, p_invoiceid, p_trackid, v_unitprice, p_quantity);
        	
     -- Atualiza o total em invoice
     SELECT SUM(il.unitprice * il.quantity)
@@ -45,13 +52,10 @@ BEGIN
     WHERE invoiceid = p_invoiceid;
 END;
 
-DROP PROCEDURE ATUALIZAR_TOTAL_INVOICE;
 
-DROP TRIGGER TRIGGER_ATUALIZAR_TOTAL_INVOICE;
-
-
+-- Teste da procedure manage_invoiceline
 BEGIN
-	manage_invoiceline(10000, 1, 130, 30.0, 1);
+	manage_invoiceline(10000, 1, 130, 1);
 END;
 
 
