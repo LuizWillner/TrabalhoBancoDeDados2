@@ -17,7 +17,7 @@ CREATE OR REPLACE PROCEDURE manage_invoiceline(
 	v_unitprice track.unitprice%TYPE;
 BEGIN
 	
-	-- Definindo qual o unitprice
+	-- Definindo qual o unitprice. Uma possível regra semântica seria que o unitprice em invoiceline tem que ser o unitprice da track
 	SELECT t.unitprice
 	INTO v_unitprice
 	FROM track t
@@ -60,10 +60,10 @@ END;
 
 
 -- Conceder permissão para executar a procedure manage_invoiceline
-GRANT EXECUTE ON manage_invoiceline TO usuario_limitado;
+GRANT EXECUTE ON manage_invoiceline TO usuario_de_acesso;
 
 
--- TRIGGER PARA IMPEDIR O UPDATE E INNSERT DO VALOR TOTAL
+-- TRIGGER PARA IMPEDIR O UPDATE E INSERT DO VALOR TOTAL AO INSERIR OU ATUALIZAR INVOICE
 CREATE OR REPLACE TRIGGER trg_invoice_total
 BEFORE INSERT OR UPDATE ON invoice
 FOR EACH ROW
@@ -102,7 +102,7 @@ INSERT INTO invoice (
     BillingPostalCode
 )
 VALUES (
-    10000,                   -- GARANTIR QUE NÃO É UM ID EXISTENTE
+    12000,                   -- GARANTIR QUE NÃO É UM ID EXISTENTE
     1,                       -- CustomerId (substitua por um ID de cliente válido)
     SYSDATE,                 -- InvoiceDate (data atual)
     'Rua Exemplo',           -- BillingAddress
@@ -112,4 +112,4 @@ VALUES (
     '12345-678'              -- BillingPostalCode
 );
 
-DELETE FROM INVOICE WHERE INVOICEID = 10000;
+DELETE FROM INVOICE WHERE INVOICEID = 12000;
